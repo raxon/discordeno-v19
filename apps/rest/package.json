@@ -1,5 +1,5 @@
 {
-  "name": "api",
+  "name": "rest",
   "version": "0.0.0",
   "private": true,
   "scripts": {
