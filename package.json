@@ -1,6 +1,6 @@
 {
-  "name": "t",
-  "version": "0.0.0",
+  "name": "triton",
+  "version": "3.0.0",
   "private": true,
   "workspaces": [
     "apps/*",
@@ -13,13 +13,14 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "esbuild": "^0.17.11",
+    "esbuild-register": "^3.4.2",
     "eslint-config-custom": "*",
     "prettier": "latest",
     "turbo": "latest"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18.0.0"
   },
-  "dependencies": {},
   "packageManager": "yarn@1.22.19"
 }
