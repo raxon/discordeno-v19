@@ -1,6 +1,7 @@
-import * as dotenv from 'dotenv'
+import dotenv from 'dotenv'
+dotenv.config({ path: '../../.env' })
+
 import { createRestManager } from '@discordeno/rest'
-dotenv.config()
 
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN as string
 
