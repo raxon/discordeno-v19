@@ -13,12 +13,12 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "@discordeno/bot": "^19.0.0-next.0b19557",
-    "@discordeno/client": "^19.0.0-next.0b19557",
-    "@discordeno/gateway": "^19.0.0-next.0b19557",
-    "@discordeno/rest": "^19.0.0-next.0b19557",
-    "@discordeno/types": "^19.0.0-next.0b19557",
-    "@discordeno/utils": "^19.0.0-next.0b19557",
+    "@discordeno/bot": "^19.0.0-next.ae40e69",
+    "@discordeno/client": "^19.0.0-next.ae40e69",
+    "@discordeno/gateway": "^19.0.0-next.ae40e69",
+    "@discordeno/rest": "^19.0.0-next.ae40e69",
+    "@discordeno/types": "^19.0.0-next.ae40e69",
+    "@discordeno/utils": "^19.0.0-next.ae40e69",
     "@swc/cli": "^0.1.62",
     "@swc/core": "^1.3.41",
     "@typescript-eslint/eslint-plugin": "^5.55.0",

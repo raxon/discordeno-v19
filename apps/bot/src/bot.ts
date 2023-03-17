@@ -14,6 +14,8 @@ export const BOT = createBot({
   events: events,
 });
 
+BOT.start();
+
 BOT.rest = createRestManager({
   token: DISCORD_TOKEN,
   proxy: {

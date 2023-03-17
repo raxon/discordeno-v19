@@ -4,13 +4,14 @@ import dotenv from 'dotenv';
 import express from 'express';
 dotenv.config({ path: '../../.env' });
 
-import { BOT } from './bot.js';
+import './bot.js';
+const random = Math.floor(Math.random() * 10);
 
 const SECRET_AUTHORIZATION = process.env.SECRET_AUTHORIZATION as string;
 const BOT_HOST = process.env.BOT_HOST as string;
-const BOT_PORT = process.env.BOT_PORT as string;
+const BOT_PORT = 8003 +random ;
+//random number 0-9 
 
-BOT.logger.info(`[run] Bot works.`);
 
 process
   .on('unhandledRejection', (error) => {
@@ -99,7 +100,7 @@ app.all('/', async (req, res) => {
       message: DiscordGatewayPayload;
       shardId: number;
     };
-
+console.log(json)
     // if (json.message.t) BOT.events.raw[snakeToCamelCase(json.message.t)]?.(req.body.payload, req.body.shardId);
 
     res.status(200).json({ success: true });
