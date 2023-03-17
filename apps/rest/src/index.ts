@@ -3,7 +3,7 @@ dotenv.config({ path: '../../.env' })
 
 import { RequestMethods } from '@discordeno/rest'
 import express from 'express'
-import { REST } from './rest'
+import { REST } from './rest.js'
 
 const REST_HOST = process.env.REST_HOST 
 const REST_PORT = process.env.REST_PORT

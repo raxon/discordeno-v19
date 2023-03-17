@@ -1,14 +1,12 @@
 import { DiscordenoShard } from '@discordeno/gateway';
 import { Collection, logger } from '@discordeno/utils';
-import { Intents } from '@discordeno/types';
-// import events from './events.js';
+import dotenv from 'dotenv';
 import express from 'express';
 import fetch from 'node-fetch';
-
-const REST_AUTHORIZATION = process.env.REST_AUTHORIZATION;
-
+dotenv.config();
 
 const SHARDS = new Collection<number, DiscordenoShard>()
+const REST_AUTHORIZATION = process.env.REST_AUTHORIZATION as string
 
 const app = express()
 
@@ -20,6 +18,13 @@ app.use(
 
 app.use(express.json())
 
+function getUrlFromShardId(totalShards: number, shardId: number) {
+ const urls = process.env.EVENT_HANDLER_URLS?.split(',') ?? [];
+ const index = totalShards % shardId;
+
+ return urls[index] ?? urls[0];
+}
+
 app.all('/*', async (req, res) => {
   if (!REST_AUTHORIZATION || REST_AUTHORIZATION !== req.headers.authorization) {
     return res.status(401).json({ error: 'Invalid authorization key.' })
@@ -27,12 +32,11 @@ app.all('/*', async (req, res) => {
 
   try {
     // Identify A Shard
-    const shardId =req.body.shardId
     switch (req.body.type) {
       case 'IDENTIFY_SHARD': {
-        logger.info(`[Shard] identifying ${SHARDS.has(req.body.shardId) ? 'existing' : 'new'} shard (${shardId})`);
+        logger.info(`[Shard] identifying ${SHARDS.has(req.body.shardId) ? 'existing' : 'new'} shard (${req.body.shardId})`);
         const shard = SHARDS.get(req.body.shardId) ?? new DiscordenoShard({
-          id: shardId,
+          id: req.body.shardId,
           connection: {
             compress: req.body.compress,
             intents: req.body.intents,
@@ -43,11 +47,11 @@ app.all('/*', async (req, res) => {
             version: req.body.version,
           },
           events: {
-            async message(shrd, payload) {
-              await fetch(process.env.EVENT_LISTENER_URL, {
+            async message(shard, payload) {
+              await fetch(getUrlFromShardId(req.body.totalShards, shard.id), {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', authorization: REST_AUTHORIZATION as string },
-                body: JSON.stringify({ payload, shardId }),
+                headers: { 'Content-Type': 'application/json', authorization: REST_AUTHORIZATION },
+                body: JSON.stringify({ payload, shardId:req.body.shardId }),
               })
                 .then((res) => res.text())
                 .catch(logger.error)
